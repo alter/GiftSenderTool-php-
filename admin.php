@@ -33,7 +33,7 @@ while ($result = mysql_fetch_array($rules))
 <h1>Generate new code</h1>
 <table width="100%" border="0">
 <tr valign="top"><td>
-<form id="myForm" action="" method="post">
+<form id="myForm" action="" method="post" enctype="multipart/form-data">
 <table>
 <tr><td class="noClone">Description:</td><td class="noClone"><input type="text" name="type" size="15"/></td></tr>
 <tr><td class="noClone">TTL*:</td><td class="noClone"><input type="text" name="ttl" value="1" size="15"/></td></tr>
@@ -46,7 +46,8 @@ foreach($array as $key => $value)
 </select></td>
 <td>Value*:<input type="text" name="value1" id="value1" size="10"/></td>
 <td>StackCount:<input type="text" name="stackcount1" id="stackcount1" value="1" size="1"/><input type="button" class="delRow" value="Delete"/></td></tr>
-<tr> <td><input type="button" class="addRow-ignoreClass" value="add rule" /></td></tr>
+<tr><td><input type="button" class="addRow-ignoreClass" value="add rule" /></td></tr>
+<tr><td><label for="file">Filename:</label></td><td><input type="file" name="file" id="file" /><td><tr>
 <tr><td><input type="submit" name="activate" value="Generate code"></td></tr>
 </table>
 </form>
