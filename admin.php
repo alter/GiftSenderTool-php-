@@ -67,12 +67,21 @@ foreach($array as $key => $value)
 
 <?php
 $allowedExtensions = array("txt");
-foreach ($_FILES as $file) {
-    if ($file['tmp_name'] > '') {
-        if (!in_array(end(explode(".", strtolower($file['name']))), $allowedExtensions)) {
-            die($file['name'].' is an invalid file type!<br/>');
-        }
+if(isset($_FILES['file']['error'] === 0){
+  $file = $_FILES['file'];
+  $file_flag = 0;
+  $accountsArray = array();
+  if ($file['tmp_name'] > '') {
+    if (!in_array(end(explode(".", strtolower($file['name']))), $allowedExtensions)) {
+      die($file['name'].' is an invalid file type!<br/>');
     }
+    else if (($file['type'] == "text/plain") && ($file['size'] < 30000000)){
+      $file_received = 1;
+      if(file_exists($file['tmp_name'])){
+        $accountsArray = file($file['tmp_name']);
+      }
+    }
+  }
 }
 
 if(isset($_POST['amount']) && ($_POST['amount'] !=''))
