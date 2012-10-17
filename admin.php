@@ -1,5 +1,4 @@
 <?php
-//test git!
 set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__.'/lib');
 include_once('main_config.inc');
 include_once('functions.inc');
@@ -66,14 +65,16 @@ foreach($array as $key => $value)
 </body>
 </html>
 
-<?
-//print_r($_POST);
+<?php
 $allowedExtensions = array("txt");
-if(isset($_FILE)){
- foreach ($_FILES as $file) { 
-    print_r($file);
- }   
+foreach ($_FILES as $file) {
+    if ($file['tmp_name'] > '') {
+        if (!in_array(end(explode(".", strtolower($file['name']))), $allowedExtensions)) {
+            die($file['name'].' is an invalid file type!<br/>');
+        }
+    }
 }
+
 if(isset($_POST['amount']) && ($_POST['amount'] !=''))
     $amount = intval($_POST['amount']);
 else
