@@ -47,7 +47,7 @@ foreach($array as $key => $value)
 <td>Value*:<input type="text" name="value1" id="value1" size="10"/></td>
 <td>StackCount:<input type="text" name="stackcount1" id="stackcount1" value="1" size="1"/><input type="button" class="delRow" value="Delete"/></td></tr>
 <tr><td><input type="button" class="addRow-ignoreClass" value="add rule" /></td></tr>
-<tr><td><label for="file">Filename:</label></td><td><input type="file" name="file" id="file" /><td><tr>
+<tr><td><label for="file">Accounts list:</label></td><td><input type="file" name="file" id="file" /><td><tr>
 <tr><td><input type="submit" name="activate" value="Generate code"></td></tr>
 </table>
 </form>
@@ -68,6 +68,12 @@ foreach($array as $key => $value)
 
 <?
 //print_r($_POST);
+$allowedExtensions = array("txt");
+if(isset($_FILE)){
+ foreach ($_FILES as $file) { 
+    print_r($file);
+ }   
+}
 if(isset($_POST['amount']) && ($_POST['amount'] !=''))
     $amount = intval($_POST['amount']);
 else
