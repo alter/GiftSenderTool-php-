@@ -1,0 +1,7 @@
+<?php
+class Localization { 
+    private $senderName = "ActivationCodeSystem";
+    private $subject = "Gift";
+    private $body = "Hello, it's gift for you!";
+}
+?>

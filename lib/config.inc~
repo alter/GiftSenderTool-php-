@@ -1,0 +1,32 @@
+<?
+
+/* database */
+$db_hostname = "192.168.198.67";
+$db_port     = "3306";
+$db_username = "present";
+$db_password = "present123";
+$db_name     = "presents"; 
+
+/* billing api */
+$billing_api_host = "192.168.198.67"; 
+$billing_api_port = "8080";
+$billing_url 	  = "http://$billing_api_host:$billing_api_port";
+$billing_version  = 1;
+
+/* master server api */
+$master_server_host = "192.168.198.66";
+$master_server_port = "10500";
+
+/* gmtool credentials */
+$gametool_username = "vzlobin";
+$gametool_password = "1";
+
+/* don't touch next variables */
+$link = "false";
+$gametool_version  = 5;
+$gametool_options = array(
+  'username' => $gametool_username,
+  'password' => $gametool_password
+);
+
+?>

@@ -1,0 +1,32 @@
+<?php
+class DBConfig{
+    private $hostname;
+    private $port;
+    private $username;
+    private $password;
+    private $name; 
+    private $gametool_username;
+    private $gametool_password;
+    private $link = "false";
+    const   billing_version  = 1;
+    const   gametool_version = 5;
+    
+    private $gametool_options = array(
+        'username' => 'vzlobin',
+        'password' => '1'
+    );
+
+    
+    public function &__get($property) {
+        if(property_exists($this, $property)){
+            return $this->$property;
+        }
+    }
+
+    public function __set($property, $value) {
+        if(property_exists($this, $property)){
+            $this->$property = $value;
+        }
+    }
+}
+?>
