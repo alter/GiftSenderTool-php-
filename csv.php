@@ -15,7 +15,7 @@ if(isset($_POST["fields"])) {
     header('Expires: 0');
     header('Cache-Control: must-revalidate');
     header('Pragma: public');
-    header('Content-Length: ' . filesize($file));
+    header('Content-Length: '.filesize($file));
     ob_clean();
     flush();
     readfile($file);

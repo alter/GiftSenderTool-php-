@@ -176,7 +176,7 @@ for($i = 0; $i < $amount; $i++)
 }
 
 echo "<b>Uniq codes list:</b><br><br>";
-echo '<form method="POST" action="csv.php" enctype="multipart/form-data>';
+echo '<form method="POST" action="csv.php" enctype="multipart/form-data">';
 if($file_received == 1){
     foreach($account_codes as $name => $uniq_code){
       $name = str_replace("\r\n",'',$name);
@@ -195,7 +195,7 @@ else{
     echo '<input type="hidden" name="fields[]" value="'.$uniq_code.'"/>'; 
   }
 }
-echo '<input type="submit" name="submit" value="save(csv)">';
+echo '<input type="submit" name="submit" value="save to csv">';
 echo '</form>';
 mysql_close($link);
 ?>
