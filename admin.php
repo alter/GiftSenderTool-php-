@@ -54,7 +54,7 @@ foreach($array as $key => $value)
 *Legend:
 <font size="2">
 <table>
-<tr><td>TTL</td><td> - time to live, how much times this code maybe used(default 50)</td></tr>
+<tr><td>TTL</td><td> - time to live, how much times this code maybe used(default 1)</td></tr>
 <tr><td>Amount</td><td> - number of codes which will be created</td></tr>
 <tr><td>Value</td><td> - maybe amount of crystals or resourceId of item</td></tr>
 </table>
@@ -66,37 +66,57 @@ foreach($array as $key => $value)
 </html>
 
 <?php
-$allowedExtensions = array("txt");
-if(isset($_FILES['file']['error'] === 0){
+$allowed_extensions = array("txt");
+$file_received = 0;
+$accounts_array = array();
+
+if($_FILES['file']['name'] != ''){
   $file = $_FILES['file'];
-  $file_flag = 0;
-  $accountsArray = array();
   if ($file['tmp_name'] > '') {
-    if (!in_array(end(explode(".", strtolower($file['name']))), $allowedExtensions)) {
+    if (!in_array(end(explode(".", strtolower($file['name']))), $allowed_extensions)) {
       die($file['name'].' is an invalid file type!<br/>');
     }
     else if (($file['type'] == "text/plain") && ($file['size'] < 30000000)){
       $file_received = 1;
       if(file_exists($file['tmp_name'])){
-        $accountsArray = file($file['tmp_name']);
+        $accounts_array = file($file['tmp_name']);
       }
+    }
+    else {
+      die($file['name'].' has a huge size or its type not text/plain<br/>');
     }
   }
 }
 
-if(isset($_POST['amount']) && ($_POST['amount'] !=''))
+$accounts_array_elements = count($accounts_array);
+if(isset($_POST['amount']) && ($_POST['amount'] !='')){
+  if($accounts_array_elements == 0){
     $amount = intval($_POST['amount']);
-else
+  }
+  else{
+    $amount = $accounts_array_elements;
+  }
+}
+else{
+  if($accounts_array_elements == 0){
     $amount = 1;
+  }
+  else{
+    $amount = $accounts_array_elements;
+  }
+}
+
 $codes = array();
+$account_codes = array();
 $created_type = 0;
+
 for($i = 0; $i < $amount; $i++)
 {
     if(isset($_POST['type']) && ($_POST['type'] != '')){
         if(isset($_POST['ttl']) && ($_POST['ttl'] != ''))
             $ttl = intval($_POST['ttl']);
         else
-            $ttl = 50;
+            $ttl = 1;
         $type = $_POST['type'];
         $rule_arr = array();
         $stack_arr = array();
@@ -125,7 +145,6 @@ for($i = 0; $i < $amount; $i++)
             echo "<font color='red'>Please fill in all fields</font>";
             return -1;
         }
-
         if($created_type == 0){
             create_type($type);
             reset ($rule_arr);
@@ -141,22 +160,34 @@ for($i = 0; $i < $amount; $i++)
         $created_type = 1;
 
         $uniq_code = get_uniq_code(get_random_code(12));
-
         $insert_present = sprintf("INSERT INTO `presents`(`name`,`types_id`,`code`,`ttl`) value('%s','%d','%s','%d')", mysql_real_escape_string($type),intval($type_id),$uniq_code, intval($ttl));
-        commit_changes($insert_present); 
-        $codes[$i] = $uniq_code;
+        commit_changes($insert_present);
+        if($file_received == 1){
+          $account_codes[$accounts_array[$i]] = $uniq_code;
+        }
+        else{
+          $codes[$i] = $uniq_code;
+        }
     }
     else{
         echo "<font color='red'>Please fill in all fields</font>";
         return -1;
     }
 }
-echo "<b>Uniq codes list:</b><br><br>";
 
+echo "<b>Uniq codes list:</b><br><br>";
 echo '<form method="POST" action="csv.php">';
-foreach($codes as $uniq_code){
-    echo $uniq_code."<br>";
+if($file_received == 1){
+    foreach($account_codes as $name => $uniq_code){
+      echo "$name => $uniq_code <br/>";
+      echo '<input type="hidden" name="fields[]" value="'.$name.';'.$uniq_code.'"/>';
+  }
+}
+if($file_received == 0) {  
+  foreach($codes as $uniq_code){
+    echo "$uniq_code<br>";
     echo '<input type="hidden" name="fields[]" value="'.$uniq_code.'"/>'; 
+  }
 }
 echo '<input type="submit" name="submit" value="save(csv)">';
 echo '</form>';
