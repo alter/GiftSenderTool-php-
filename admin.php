@@ -196,6 +196,7 @@ else{
     echo '<input type="hidden" name="fields[]" value="'.$uniq_code.'"/>'; 
   }
 }
+echo '<br/>';
 echo '<input type="submit" name="submit" value="save to csv">';
 echo '</form>';
 mysql_close($link);
