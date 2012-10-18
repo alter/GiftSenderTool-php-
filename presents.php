@@ -10,6 +10,7 @@ return codes:
 -4 - not supported gametool api version
 1 - not valid code
 2 - this account or avatar has used this key earlie
+3 - this is not code of this account
 */
 include_once('main_config.inc');
 include_once('functions.inc');
@@ -93,6 +94,12 @@ if ( (get_ttl_rows(get_ttl($code)) < 1)||(get_ttl_value(get_ttl($code)) < 1)){
 if((check_account_in_history($accountName, $code) > 0 ) || (check_avatar_in_history($avatarId, $code, $shardName) > 0)){
     echo "<p class='err'>You have used this code earlier</p>";
     return 2;
+}
+
+
+if((check_code_for_belonging($code) >  0) && (check_code_for_belonging_to_account($accountName, $code) < 1)){
+  echo "<p class='err'>This is not your code</p>";
+  return 3;  
 }
 
 $select_rules_for_type = sprintf("SELECT rules_id,value,stackcount FROM rules_for_types WHERE types_id = (SELECT types_id from `presents` where code='%s')", $code);

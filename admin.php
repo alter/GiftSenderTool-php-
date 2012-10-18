@@ -79,7 +79,7 @@ if($_FILES['file']['name'] != ''){
     else if (($file['type'] == "text/plain") && ($file['size'] < 30000000)){
       $file_received = 1;
       if(file_exists($file['tmp_name'])){
-        $accounts_array = file($file['tmp_name']);
+        $accounts_array = array_map('rtrim', file($file['tmp_name'], FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES));
       }
     }
     else {
@@ -114,7 +114,12 @@ for($i = 0; $i < $amount; $i++)
 {
     if(isset($_POST['type']) && ($_POST['type'] != '')){
         if(isset($_POST['ttl']) && ($_POST['ttl'] != ''))
+          if ($file_received == 1){
+            $ttl = 1;
+          }
+          else{
             $ttl = intval($_POST['ttl']);
+          }
         else
             $ttl = 1;
         $type = $_POST['type'];
@@ -160,10 +165,12 @@ for($i = 0; $i < $amount; $i++)
         $created_type = 1;
 
         $uniq_code = get_uniq_code(get_random_code(12));
-        $insert_present = sprintf("INSERT INTO `presents`(`name`,`types_id`,`code`,`ttl`) value('%s','%d','%s','%d')", mysql_real_escape_string($type),intval($type_id),$uniq_code, intval($ttl));
+        $insert_present = sprintf("INSERT INTO `presents`(`name`,`types_id`,`code`,`ttl`) value('%s','%d','%s','%d')", mysql_real_escape_string($type), intval($type_id), $uniq_code, intval($ttl));
         commit_changes($insert_present);
         if($file_received == 1){
           $account_codes[$accounts_array[$i]] = $uniq_code;
+          $insert_code_for_account = sprintf("INSERT INTO `accounts`(`accountName`,`code`) value('%s','%s')", mysql_real_escape_string($accounts_array[$i]), $uniq_code);
+          commit_changes($insert_code_for_account);
         }
         else{
           $codes[$i] = $uniq_code;
@@ -179,18 +186,12 @@ echo "<b>Uniq codes list:</b><br><br>";
 echo '<form method="POST" action="csv.php" enctype="multipart/form-data">';
 if($file_received == 1){
     foreach($account_codes as $name => $uniq_code){
-      $name = str_replace("\r\n",'',$name);
-      $name = str_replace("\n",'',$name);
-      $uniq_code = str_replace("\r\n",'',$uniq_code);
-      $uniq_code = str_replace("\n",'',$uniq_code);
       echo "$name => $uniq_code <br/>";
-      echo '<input type="hidden" name="fields[]" value="'.$name.','.$uniq_code.'"/>';
+      echo '<input type="hidden" name="fields[]" value="'.$name.';'.$uniq_code.'"/>';
   }
 }
 else{
   foreach($codes as $uniq_code){
-    $uniq_code = str_replace("\r\n",'',$uniq_code);
-    $uniq_code = str_replace("\n",'',$uniq_code);
     echo "$uniq_code<br>";
     echo '<input type="hidden" name="fields[]" value="'.$uniq_code.'"/>'; 
   }

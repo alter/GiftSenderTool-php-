@@ -3,7 +3,7 @@ include_once('ttl.inc');
 
 function get_transaction_id(){
 	$insert_transaction_id = "insert into `transactionsId`(`id`) value('0')";
-    commit_changes($insert_transaction_id);
+  commit_changes($insert_transaction_id);
 	$select_transaction_id = "select id from `transactionsId` order by id desc limit 1";
 	$result = mysql_query($select_transaction_id);
 	$result = mysql_fetch_array($result, MYSQL_NUM);
@@ -12,24 +12,37 @@ function get_transaction_id(){
 
 function check_path($path){
 	if (is_null($path))
-                return -1;
-        else
-                return 0;
-
+    return -1;
+  else
+    return 0;
 }
 
 function check_avatar_in_history($avatarId, $code, $shardName){
 	$select_unique = sprintf("select id from `history` where `code` = '%s' and `avatarId` = '%d' and `shard` = '%s'", mysql_real_escape_string($code), intval($avatarId), $shardName);
 	$result = mysql_query($select_unique) or die(mysql_error());
 	$rows = mysql_num_rows($result);
-        return $rows;		
+  return $rows;		
 }
+
+function check_code_for_belonging($code){
+  $find_code_owner = sprintf("select id from `accounts` where `code` = '%s'", mysql_real_escape_string($code));
+  $result = mysql_query($find_code_owner) or die(mysql_error());
+  $rows = mysql_num_rows($result);
+  return $rows;
+}
+function check_code_for_belonging_to_account($accountName, $code){
+  $find_code_owner = sprintf("select id from `accounts` where `code` = '%s' and `accountName` = '%s'", mysql_real_escape_string($code), mysql_real_escape_string($accountName));
+  $result = mysql_query($find_code_owner) or die(mysql_error());
+  $rows = mysql_num_rows($result);
+  return $rows;
+}
+
 
 function check_account_in_history($accountName, $code){
 	$select_unique = sprintf("select id from `history` where `code` = '%s' and `accountName` = '%s'", mysql_real_escape_string($code), mysql_real_escape_string($accountName));
 	$result = mysql_query($select_unique) or die(mysql_error());
 	$rows = mysql_num_rows($result);
-        return $rows;		
+  return $rows;		
 }
 
 function db_connect($db_hostname,$db_port,$db_username,$db_password,$db_name){
