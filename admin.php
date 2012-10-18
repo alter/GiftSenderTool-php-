@@ -176,15 +176,21 @@ for($i = 0; $i < $amount; $i++)
 }
 
 echo "<b>Uniq codes list:</b><br><br>";
-echo '<form method="POST" action="csv.php">';
+echo '<form method="POST" action="csv.php" enctype="multipart/form-data>';
 if($file_received == 1){
     foreach($account_codes as $name => $uniq_code){
+      $name = str_replace("\r\n",'',$name);
+      $name = str_replace("\n",'',$name);
+      $uniq_code = str_replace("\r\n",'',$uniq_code);
+      $uniq_code = str_replace("\n",'',$uniq_code);
       echo "$name => $uniq_code <br/>";
-      echo '<input type="hidden" name="fields[]" value="'.$name.';'.$uniq_code.'"/>';
+      echo '<input type="hidden" name="fields[]" value="'.$name.','.$uniq_code.'"/>';
   }
 }
-if($file_received == 0) {  
+else{
   foreach($codes as $uniq_code){
+    $uniq_code = str_replace("\r\n",'',$uniq_code);
+    $uniq_code = str_replace("\n",'',$uniq_code);
     echo "$uniq_code<br>";
     echo '<input type="hidden" name="fields[]" value="'.$uniq_code.'"/>'; 
   }
