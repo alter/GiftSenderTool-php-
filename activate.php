@@ -11,7 +11,21 @@ include_once('ItemToSend.inc.php');
 include_once('gametool.inc.php');
 include_once('adminTool.inc.php');
 
-check_and_set_POST_variables();
+if(isset($_POST['basePartName']) && $_POST['basePartName']!='')
+   $basePartName = $_POST['basePartName'];
+
+if(isset($_POST['master_server_host']) && $_POST['master_server_host']!='')
+    $master_server_host = $_POST['master_server_host'];
+
+if(isset($_POST['master_server_port']) && $_POST['master_server_port']!='')
+    $master_server_port = intval($_POST['master_server_port']);
+
+if(isset($_POST['account']) && $_POST['account']!='')
+    $account = $_POST['account'];
+
+if(isset($_POST['shardId']) && $_POST['shardId']!='')
+    $shardId = intval($_POST['shardId']);
+
 
 $ms_api = connect_to_ms_api($master_server_host, $master_server_port);
 

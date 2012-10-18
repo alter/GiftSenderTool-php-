@@ -6,7 +6,9 @@ include_once('functions.inc');
 include_once('hessian/HessianClient.php');
 include_once('adminTool.inc.php');
 
-check_and_set_POST_variables();
+
+if(isset($_POST['basePartName']) && $_POST['basePartName']!='')
+    $basePartName = $_POST['basePartName'];
 
 foreach($baseparts as $basepart)
     if( $basepart['basepart_name'] == "$basePartName"){
@@ -28,9 +30,9 @@ catch(Exception $ex){
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
 <link rel="stylesheet" type="text/css" href="css/style.css">
-<script src="js/jquery_1.7.js"></script> 
-<script src="js/jquery.form.js"></script> 
-<script src="js/activate_div.js"></script> 
+<script src="js/jquery_1.7.js" type="application/javascript"></script> 
+<script src="js/jquery.form.js" type="application/javascript"></script> 
+<script src="js/activate_div.js" type="application/javascript"></script> 
 </head>
 <body>
 <form class="activate_post" action="activate.php" method="post">

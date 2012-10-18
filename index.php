@@ -1,5 +1,4 @@
 <?php
-
 header("Content-Type: text/html; charset=utf-8");
 set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__.'/lib');
 include_once('main_config.inc');
