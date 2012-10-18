@@ -18,7 +18,10 @@ while($i){
             'billing_api_host' => $$bpx->billing_api_host,
             'billing_api_port' => $$bpx->billing_api_port,
             'master_server_host' => $$bpx->master_server_host,
-            'master_server_port' => $$bpx->master_server_port
+            'master_server_port' => $$bpx->master_server_port,
+            'localization_senderName' => $$bpx->senderName,
+            'localization_subject' => $$bpx->subject,
+            'localization_body' => $$bpx->body
         );
         $baseparts[] = $$base_options;
         ++$i;  

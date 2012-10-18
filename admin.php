@@ -18,8 +18,8 @@ while ($result = mysql_fetch_array($rules))
       td { font-size:12px; }    
     </style>
     <script src="js/jquery_1.3.min.js"></script> 
-    <script src="js/jquery.form.js"></script> 
-    <script src="js/add_del_buttons.js"></script>
+    <script src="js/jquery.table.addrow.js"></script> 
+    <script src="js/add_del_buttons.js"></script> 
 </head>
 <body>
 <pre>

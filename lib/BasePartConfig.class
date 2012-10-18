@@ -1,13 +1,10 @@
 <?php
-class BasePartConfig{
+class BasePartConfig extends Localization{
     private $basepart_name;
     private $billing_api_host;
     private $billing_api_port;
     private $master_server_host;
     private $master_server_port;
-    private $senderName;
-    private $subject;
-    private $body;
     
     public function &__get($property) {
         if(property_exists($this, $property)){

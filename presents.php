@@ -31,11 +31,15 @@ if(isset($_POST['gametool_host']) && $_POST['gametool_host'] != '')
 if(isset($_POST['gametool_port']) && $_POST['gametool_port'] != '')
     $gametool_port   = intval($_POST['gametool_port']); 
 
-foreach($baseparts as $basepart)
+foreach($baseparts as $basepart){
     if( $basepart['basepart_name'] == "$basePartName"){
         $billing_api_host = $basepart['billing_api_host'];
         $billing_api_port = $basepart['billing_api_port'];
+        $localization_senderName = $basepart['localization_senderName'];
+        $localization_subject = $basepart['localization_subject'];
+        $localization_body = $basepart['localization_body'];
     }
+}
 $billing_url  = "http://$billing_api_host:$billing_api_port";
 $gametool_url = "http://$gametool_host:$gametool_port/gametool";
 
@@ -123,9 +127,9 @@ foreach($array as $key => $value){
             $item->runeResourceId = 0; // int
             $item->stackCount = intval($stackcount); // int
             $item->counter = 0; // int
-            $item->senderName = "ActivationCodeSystem"; // String
-            $item->subject = "Gift"; // String
-            $item->body = sprintf("Hello, it's gift for you from code '%s'", $code); // String
+            $item->senderName = "$localization_senderName"; // String
+            $item->subject = "$localization_subject"; // String
+            $item->body = sprintf("$localization_body '%s'", $code); // String
             $items = array($item);
             $gametool_proxy->multisendItemToAvatarByMail($items);
             $item = null; $items = null;

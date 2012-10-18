@@ -1,4 +1,7 @@
-CurrentVersion: 1.0.2
+CurrentVersion: 1.0.3
+
+1.0.3:
+added localization of mail
 
 1.0.2:
 added generation of personal coded by list of accounts
