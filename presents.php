@@ -1,17 +1,7 @@
 <?php
 header("Content-Type: text/html; charset=utf-8");
 set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__.'/lib');
-/*
-return codes:
-0 - success
--1 - connection to billing or gametool server refused
--2 - mysql connection refuse
--3 - not supported billing api version
--4 - not supported gametool api version
-1 - not valid code
-2 - this account or avatar has used this key earlie
-3 - this is not code of this account
-*/
+
 include_once('main_config.inc');
 include_once('functions.inc');
 include_once('hessian/HessianClient.php');

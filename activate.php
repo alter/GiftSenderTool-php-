@@ -11,20 +11,7 @@ include_once('ItemToSend.inc.php');
 include_once('gametool.inc.php');
 include_once('adminTool.inc.php');
 
-if(isset($_POST['basePartName']) && $_POST['basePartName']!='')
-   $basePartName = $_POST['basePartName'];
-
-if(isset($_POST['master_server_host']) && $_POST['master_server_host']!='')
-    $master_server_host = $_POST['master_server_host'];
-
-if(isset($_POST['master_server_port']) && $_POST['master_server_port']!='')
-    $master_server_port = intval($_POST['master_server_port']);
-
-if(isset($_POST['account']) && $_POST['account']!='')
-    $account = $_POST['account'];
-
-if(isset($_POST['shardId']) && $_POST['shardId']!='')
-    $shardId = intval($_POST['shardId']);
+check_and_set_POST_variables();
 
 $ms_api = connect_to_ms_api($master_server_host, $master_server_port);
 
@@ -66,18 +53,9 @@ $avatars = $gametool_proxy->getAvatarsIgnoringCase($account);
 <title>Activation Code</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
 <link rel="stylesheet" type="text/css" href="css/style.css">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
-<script src="http://malsup.github.com/jquery.form.js"></script> 
-<script> 
-    $(document).ready(function() { 
-        var options = { success:       showResponse };
-        $('.presents_post').ajaxForm(options); 
-    }); 
-
-    function showResponse(responseText, statusText, xhr, $form)  { 
-        $(".presents_div").html(responseText);
-    };
-</script> 
+<script src="js/jquery_1.7.js"></script> 
+<script src="js/jquery.form.js"></script> 
+<script src="js/presents_div.js"></script> 
 </head>
 <body>
 <form class="presents_post" action="presents.php" method="post">

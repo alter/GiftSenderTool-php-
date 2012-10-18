@@ -6,8 +6,7 @@ include_once('functions.inc');
 include_once('hessian/HessianClient.php');
 include_once('adminTool.inc.php');
 
-if(isset($_POST['basePartName']) && $_POST['basePartName']!='')
-    $basePartName = $_POST['basePartName'];
+check_and_set_POST_variables();
 
 foreach($baseparts as $basepart)
     if( $basepart['basepart_name'] == "$basePartName"){
@@ -29,18 +28,9 @@ catch(Exception $ex){
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
 <link rel="stylesheet" type="text/css" href="css/style.css">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
-<script src="http://malsup.github.com/jquery.form.js"></script>
-<script> 
-  $(document).ready(function() { 
-      var options = { success:       showResponse };
-      $('.activate_post').ajaxForm(options); 
-  }); 
-
-  function showResponse(responseText, statusText, xhr, $form)  { 
-      $(".activate_div").html(responseText);
-  };
-</script> 
+<script src="js/jquery_1.7.js"></script> 
+<script src="js/jquery.form.js"></script> 
+<script src="js/activate_div.js"></script> 
 </head>
 <body>
 <form class="activate_post" action="activate.php" method="post">

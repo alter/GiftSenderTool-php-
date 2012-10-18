@@ -17,16 +17,9 @@ while ($result = mysql_fetch_array($rules))
     <style type="text/css">
       td { font-size:12px; }    
     </style>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
-    <script src="js/jquery.table.addrow.js"></script>
-    <script type="text/javascript">
-        (function($){
-            $(document).ready(function(){
-                $(".addRow-ignoreClass").btnAddRow({maxRow:50,ignoreClass:"noClone"});
-                $(".delRow").btnDelRow();
-            });
-        })(jQuery);
-    </script>
+    <script src="js/jquery_1.3.min.js"></script> 
+    <script src="js/jquery.form.js"></script> 
+    <script src="js/add_del_buttons.js"></script>
 </head>
 <body>
 <pre>
@@ -133,23 +126,23 @@ for($i = 0; $i < $amount; $i++)
 
             else if(strstr($key, 'stackcount')){
                 if($value == ''){
-                    echo "<font color='red'><b>Please fill in all fields</b></font>";
-                    return -1;
+                    echo "<font color='red'><b>".errors(8)."</b></font>";
+                    return 8;
                 }
                 $stack_arr["$key"] = intval($value);
             }
 
             else if(strstr($key, 'value')){
                 if($value == ''){
-                    echo "<font color='red'><b>Please fill in all fields</b></font>";
-                    return -1;
+                    echo "<font color='red'><b>".errors(8)."</b></font>";
+                    return 8;
                 }
                 $value_arr["$key"] = intval($value);
             }
         }
         if((count($rule_arr) < 1) || (count($value_arr) != count($rule_arr))){
-            echo "<font color='red'>Please fill in all fields</font>";
-            return -1;
+            echo "<font color='red'>".errors(8)."</font>";
+            return 8;
         }
         if($created_type == 0){
             create_type($type);
@@ -178,8 +171,8 @@ for($i = 0; $i < $amount; $i++)
         }
     }
     else{
-        echo "<font color='red'>Please fill in all fields</font>";
-        return -1;
+        echo "<font color='red'>".errors(8)."</font>";
+        return 8;
     }
 }
 
