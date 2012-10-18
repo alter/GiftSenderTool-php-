@@ -110,4 +110,25 @@ function connect_to_ms_api($master_server_host,$master_server_port){
     return $ms_api;
 }
 
+function errors($id){
+  switch($id){
+    case 0: return "success";
+            break;
+    case 1: return "connection to billing or gametool server refused";
+            break;
+    case 2: return "mysql connection refuse";
+            break;
+    case 3: return "not supported billing api version";
+            break;
+    case 4: return "not supported gametool api version";
+            break;
+    case 5: return "not valid code";
+            break;
+    case 6: return "this account or avatar has used this key earlie";
+            break;
+    case 7: return "this is not code of this account";
+            break;
+  }
+}
+
 ?>

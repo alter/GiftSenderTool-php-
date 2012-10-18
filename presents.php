@@ -54,8 +54,8 @@ try{
 	$billing_path = $billing_serverVer->getVersionPath($db::billing_version);
 }
 catch(Exception $ex){
-    echo $ex->getMessage()."<p class='err'>Check that you have access to billing server</p>";
-    return -1;
+    echo $ex->getMessage()."<p class='err'>".errors(1)."</p>";
+    return 1;
 }
 
 try{
@@ -63,18 +63,18 @@ try{
 	$gametool_path = $gametool_serverVer->getVersionPath($db::gametool_version);
 }
 catch(Exception $ex){
-	echo $ex->getMessage()."<p class='err'>Check that you have access to gametool server</p>";
-	return -1;
+	echo $ex->getMessage()."<p class='err'>".errors(1)."</p>";
+	return 1;
 }
 
 if(check_path($billing_path) != 0){
-	echo "<p class='err'>billing api version isn't supported</p>";
-	return -3;
+	echo "<p class='err'>".errors(3)."</p>";
+	return 3;
 }
 
 if(check_path($gametool_path) != 0){
-	echo "<p class='err'>gametool api version isn't supported</p>";
-	return -4;
+	echo "<p class='err'>".errors(4)."</p>";
+	return 4;
 }
 
 
@@ -87,19 +87,19 @@ registerGametoolMethods($gametool_url . $gametool_path);
 db_connect($db->hostname,$db->port,$db->username,$db->password,$db->name);
 
 if ( (get_ttl_rows(get_ttl($code)) < 1)||(get_ttl_value(get_ttl($code)) < 1)){
-	echo "<p class='err'>This is not valid code or it has been expired</p>";
-	return 1;
+	echo "<p class='err'>".errors(5)."</p>";
+	return 5;
 }
 
 if((check_account_in_history($accountName, $code) > 0 ) || (check_avatar_in_history($avatarId, $code, $shardName) > 0)){
-    echo "<p class='err'>You have used this code earlier</p>";
-    return 2;
+    echo "<p class='err'>".errors(6)."</p>";
+    return 6;
 }
 
 
 if((check_code_for_belonging($code) >  0) && (check_code_for_belonging_to_account($accountName, $code) < 1)){
-  echo "<p class='err'>This is not your code</p>";
-  return 3;  
+  echo "<p class='err'>".errors(7)."</p>";
+  return 7;  
 }
 
 $select_rules_for_type = sprintf("SELECT rules_id,value,stackcount FROM rules_for_types WHERE types_id = (SELECT types_id from `presents` where code='%s')", $code);

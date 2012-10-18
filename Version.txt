@@ -1,0 +1,7 @@
+CurrentVersion: 1.0.2
+
+1.0.2:
+added generation of personal coded by list of accounts
+
+1.0.1:
+added "save to csv" feature
