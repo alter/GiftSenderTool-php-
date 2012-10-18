@@ -12,18 +12,9 @@ include_once('adminTool.inc.php');
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
 <link rel="stylesheet" type="text/css" href="css/style.css">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
-<script src="http://malsup.github.com/jquery.form.js"></script> 
-<script> 
-    $(document).ready(function() { 
-        var options = { success:       showResponse };
-        $('.login_post').ajaxForm(options); 
-    }); 
-
-    function showResponse(responseText, statusText, xhr, $form)  { 
-        $(".login_div").html(responseText);
-    };
-</script> 
+<script src="js/jquery_1.7.js"></script> 
+<script src="js/jquery.form.js"></script> 
+<script src="js/login_div.js"></script> 
 </head>
 <body>
 <h1>Activate code</h1>
