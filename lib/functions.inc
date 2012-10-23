@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('ttl.inc');
 
 function get_transaction_id(){
@@ -132,5 +132,6 @@ function errors($id){
             break;
   }
 }
+
 
 ?>

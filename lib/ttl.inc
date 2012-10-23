@@ -1,4 +1,4 @@
-<?
+<?php
 function get_ttl($code){
         $select_ttl = sprintf("SELECT ttl FROM `presents` WHERE code='%s'", mysql_real_escape_string($code));
         $result = mysql_query($select_ttl) or die(mysql_error()); 
