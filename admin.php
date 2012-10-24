@@ -104,6 +104,13 @@ $codes = array();
 $account_codes = array();
 $created_type = 0;
 
+if( $amount == 0){
+  $type = mysql_real_escape_string($_POST['type']);
+  create_type($type);
+  $type_id = get_type_id($type);
+  echo "<b>Type id: $type_id</b><br>";
+}
+
 for($i = 0; $i < $amount; $i++)
 {
     if(isset($_POST['type']) && ($_POST['type'] != '')){
@@ -116,7 +123,7 @@ for($i = 0; $i < $amount; $i++)
           }
         else
             $ttl = 1;
-        $type = $_POST['type'];
+        $type = mysql_real_escape_string($_POST['type']);
         $rule_arr = array();
         $stack_arr = array();
         $value_arr = array();
@@ -150,6 +157,7 @@ for($i = 0; $i < $amount; $i++)
             reset ($stack_arr);
             reset ($value_arr);
             $type_id = get_type_id($type);
+            echo "<b>Type id: $type_id</b><br>";
             while ((list($r_key, $r_value) = each($rule_arr)) && (list($v_key, $v_value) = each($value_arr)) && (list($s_key, $s_value) = each($stack_arr))){
                 $insert_rules_for_types = sprintf("INSERT INTO `rules_for_types`(`types_id`,`rules_id`,`value`,`stackcount`) value('%d','%d','%d','%d')", intval($type_id), intval($r_value), intval($v_value), intval($s_value));
                 commit_changes($insert_rules_for_types);

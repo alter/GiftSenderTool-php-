@@ -130,6 +130,8 @@ function errors($id){
             break;
     case 8: return "Please fill in all fields";
             break;
+    case 9: return "Not valid type id";
+            break;
   }
 }
 
